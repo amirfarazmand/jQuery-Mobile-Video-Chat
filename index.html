@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="http://www.parsecdn.com/js/parse-1.2.13.min.js"></script>
+  <link rel="stylesheet" href="css/call.css">
+ <script type="text/javascript" src="dist/peer.js"></script>  
+</head>
+<body>
+
+<!-- contactPanel -->
+<div data-role="page" id="pageone">
+    <div data-role="panel" id="contactPanel"> 
+       <a href="#pageone" data-rel="close" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-a ui-icon-home ui-btn-icon-left">Home</a>
+         <!-- Contacts-->
+      <form class="ui-filterable">
+        <input id="myFilter" data-type="search">
+     </form>
+      <div id="contactList">
+         <ul id="contactListUL" data-role="listview" data-filter="true" data-input="#myFilter" data-autodividers="true" data-inset="true">
+      </div>
+      <input type="text" id="addContact" placeholder="Add a contact and Press enter" onchange="addContactPars()" />
+    </div> 
+   <!-- End of contactPanel  <a id="callBut" href="#chatWindow" data-rel="popup" class="ui-btn ui-btn-inline ui-corner-all" onclick="return contactSelected()">Select a Contact to call</a>-->
+
+ <!-- dialPanel -->
+  <div data-role="panel" id="dialPanel" data-position-fixed="true"> 
+   <a href="#pageone" data-rel="close" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-a ui-icon-home ui-btn-icon-left">Home</a>
+    <h3 id="callNumber" value="testValue">Dial a Number</h3>
+    <!-- Dial Pad-->
+     <div class="ui-grid-c">
+     <br>
+        <div class="ui-block-a"> <a href="#" class="ui-btn ui-corner-all ui-shadow" onclick="showAlert('1')">1</a><br> </div>
+        <div class="ui-block-b"> <a href="#" class="ui-btn ui-corner-all ui-shadow" onclick="showAlert('2')">2</a><br> </div>
+        <div class="ui-block-c"> <a href="#" class="ui-btn ui-corner-all ui-shadow" onclick="showAlert('3')">3</a><br> </div>
+        <div class="ui-block-a"> <a href="#" class="ui-btn ui-corner-all ui-shadow" onclick="showAlert('4')">4</a><br> </div>
+        <div class="ui-block-b"> <a href="#" class="ui-btn ui-corner-all ui-shadow" onclick="showAlert('5')">5</a><br> </div>
+        <div class="ui-block-c"> <a href="#" class="ui-btn ui-corner-all ui-shadow" onclick="showAlert('6')">6</a><br> </div>
+        <div class="ui-block-a"> <a href="#" class="ui-btn ui-corner-all ui-shadow" onclick="showAlert('7')">7</a><br> </div>
+        <div class="ui-block-b"> <a href="#" class="ui-btn ui-corner-all ui-shadow" onclick="showAlert('8')">8</a><br> </div>
+        <div class="ui-block-c"> <a href="#" class="ui-btn ui-corner-all ui-shadow" onclick="showAlert('9')">9</a><br> </div>
+        <div class="ui-block-a"> <a href="#" class="ui-btn ui-corner-all ui-shadow" onclick="deleteNumber()">Del</a><br> </div>
+        <div class="ui-block-b"> <a href="#" class="ui-btn ui-corner-all ui-shadow" onclick="showAlert('0')">0</a><br> </div>
+        <div class="ui-block-c"> <a href="#" class="ui-btn ui-corner-all ui-shadow">Call</a><br> </div>
+     </div>
+   <style type="text/css">  .ui-btn{
+    margin-top: -5px;
+    margin-bottom: -5px;
+    } </style>
+
+  </div> 
+  <!-- End of dialPanel -->
+
+ <!-- loginPage -->
+  <div data-role="panel" id="loginPage" data-position-fixed="true"> 
+   <a href="#pageone" data-rel="close" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-a ui-icon-home ui-btn-icon-left">Home</a>
+       <form id="signInUp">
+                <input type="text" name="fullname" id="userId" placeholder="User ID">       
+                <input  type="password" name="password" id="password" placeholder="Password">
+                <input type="submit" data-inline="true" value="Sign Up or Login" onclick="signToPars()">
+       </form>
+  </div>
+
+   <!-- End of loginPage -->
+
+   <!-- homePage -->
+ <div data-role="header">
+           <a href="#" class="ui-btn ui-corner-all ui-shadow ui-icon-gear ui-btn-icon-left">&#9776;</a>
+           <h1>Chapar</h1>
+           <a id="signInUpBut" sign href="#loginPage" onclick="signInUpButFunction()" class="ui-btn ui-corner-all ui-shadow ui-icon-search ui-btn-icon-right">Login</a>
+
+  <!--  </div>
+    <div data-role="main" class="ui-content">
+    <a href="#contactPanel" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Contacts</a>
+    <a href="#myPanelFixed" class="ui-btn ui-btn-inline ui-corner-all ui-shadow">Dial Pad</a>
+  </div>  -->
+  <!-- homePage Buttons -->
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#contactPanel" class="ui-btn ui-shadow ui-icon-star ui-btn-icon-top">Contacts</a></li>
+        <li><a href="#dialPanel" class="ui-btn ui-shadow ui-icon-grid ui-btn-icon-top">Dial Pad</a></li>
+        <li><a href="#" class="ui-btn ui-shadow ui-icon-info ui-btn-icon-top">Help</a></li>
+      </ul>
+    </div>
+
+    <!-- Recent contacts-->
+    <div id="recentList">
+       <ul id="recentListUL" data-role="listview" data-inset="true"></ul>
+    </div>
+    <!-- End of Recent contacts-->
+      <div data-role="footer">
+        <h1>Chat Window</h1>
+      </div> 
+
+<!-- Chat Window -->
+    <!-- Text-->
+    <div class="pure-g">
+      <!-- Steps -->
+      <div class="pure-u-1-3">
+        <!-- Get local audio/video stream -->
+        <div id="step1">
+          <p>Please click `allow` on the top of the screen so we can access your webcam and microphone for calls.</p>
+          <div id="step1-error">
+            <p>Failed to access the webcam and microphone. Make sure to run this demo on an http server and click allow when asked for permission by the browser.</p>
+            <a href="#" class="pure-button pure-button-error" id="step1-retry">Try again</a>
+          </div>
+        </div>
+        <!-- Make calls to others -->
+        <div id="step2">
+          <p>Click on a contact and press call below <span id="my-id">...</span></p>
+          <div class="pure-form">
+            <!-- <input type="text" placeholder="Call user id..." id="callto-id"> -->
+            <a href="#" class="pure-button pure-button-success" id="make-call">Call</a>
+          </div>
+        </div>
+        <!-- Call in progress -->
+        <div id="step3">
+          <p>Currently in call with <span id="their-id">...</span></p>
+          <p><a href="#" class="pure-button pure-button-error" id="end-call">End call</a></p>
+        </div>
+      </div>
+   </div>
+    <!-- Video area -->
+    <div class="pure-u-2-3" id="video-container">
+        <video id="their-video" autoplay></video>
+        <video id="my-video" muted="true" autoplay></video>
+    </div>
+    <!-- End of Chat -->
+</div> 
+ <script type="text/javascript" src="js/functions.js"></script>
+</body>
+</html>
